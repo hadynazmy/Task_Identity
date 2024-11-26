@@ -1,0 +1,69 @@
+﻿@model AddUserViewModel
+
+@{
+    ViewData["Title"] = "Add New User";
+}
+
+<form class="card mb-4" id="AddUserForm" asp-area="Administration" asp-controller="Users" asp-action="Add" method="post" data-ajax-method="post" data-ajax="true"
+      data-ajax-begin="onModalBegin" data-ajax-success="onModalSuccess" data-ajax-failure="onModelError" data-ajax-complete="onModalComplete">
+
+    <div class="card-body">
+        <div class="row g-3">
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="FirstName">First Name</label>
+                <input asp-for="FirstName" class="form-control" maxlength="100" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="LastName">Last Name</label>
+                <input asp-for="LastName" class="form-control" maxlength="100" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="Email">Email</label>
+                <input asp-for="Email" class="form-control" autocomplete="username" aria-required="true" placeholder="name@example.com" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="UserName">Username</label>
+                <input asp-for="UserName" class="form-control" maxlength="100" />
+                <span asp-validation-for="UserName" class="text-danger"></span>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="Password">Password</label>
+                <input asp-for="Password" class="form-control" autocomplete="new-password" aria-required="true" placeholder="password" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="col-sm-6">
+                <label class="form-label" asp-for="ConfirmPassword">Confirm Password</label>
+                <input asp-for="ConfirmPassword" class="form-control" autocomplete="new-password" aria-required="true" placeholder="confirm password" />
+                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+            </div>
+        </div>
+
+        <hr />
+        <h6>Roles</h6>
+        @for (int i = 0; i < Model.Roles.Count; i++)
+        {
+            <div class="form-check m-1">
+                <input type="hidden" asp-for="@Model.Roles[i].RoleId" />
+                <input type="hidden" asp-for="@Model.Roles[i].RoleName" />
+                <input asp-for="@Model.Roles[i].IsSelected" class="form-check-input" type="checkbox" />
+                <label class="form-check-label" asp-for="@Model.Roles[i].IsSelected">
+                    @Model.Roles[i].RoleName
+                </label>
+            </div>
+        }
+
+        <span asp-validation-for="Roles" class="text-danger"></span>
+    </div>
+
+    <div class="pt-4 card-footer text-center">
+        <button type="submit" class="btn btn-primary me-sm-3 me-1 waves-effect waves-light">Save</button>
+        <button type="button" onclick="window.location.href='/Administration/Users/Index'" class="btn btn-label-secondary waves-effect">Back</button>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
